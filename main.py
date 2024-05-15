@@ -34,13 +34,13 @@ def get_p_and_h1(url):
 links = crawler(url) # Guarda los valores que me retorna la funtion crawler en la variable links
 
 # Defino un dict para poder trabajar posteriormente y transformarlo en Json
-cosas = {}
+links_with_their_tags = {}
 
 # Por cada link que haya en la variable links
 for link in links:
     # En caso de algun error ignora ese link y continua con el siguiente
     try:
-        cosas.update({link['href']: get_p_and_h1(link['href'])}) # Agrega al dict definido anteriormente, como clave el link pero solamente el href de este, y como clave utilizo la function get_p_and_h1 y utilizo nuevamente el mismo href del <a>
+        links_with_their_tags.update({link['href']: get_p_and_h1(link['href'])}) # Agrega al dict definido anteriormente, como clave el link pero solamente el href de este, y como valor utilizo la function get_p_and_h1 y utilizo nuevamente el mismo href del <a>
         print(f'se guardo con exito {link['href']}')
     except KeyError:
         continue
@@ -49,4 +49,4 @@ print('Se guardaron todos los links correctamente')
 
 # Guarda el diccionario en un archivo Json
 with open('resultados.json', 'w') as f:
-    json.dump(cosas, f)
+    json.dump(links_with_their_tags, f)
